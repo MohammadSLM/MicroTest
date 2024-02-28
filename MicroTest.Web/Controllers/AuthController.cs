@@ -36,6 +36,30 @@ namespace MicroTest.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequestDto model)
+        {
+            ResponseDto result = await _authService.RegisterAsync(model);
+            ResponseDto assingRole;
+
+            if (result!=null && result.IsSuccess)
+            {
+                if (string.IsNullOrEmpty(model.Role))
+                {
+                    model.Role = SD.RoleCustomer;
+                }
+                assingRole = await _authService.AssignRoleAsync(model);
+                if (assingRole!=null && assingRole.IsSuccess)
+                {
+                    TempData["success"] = "Registration Successful";
+                    return RedirectToAction(nameof(Login));
+                }
+
+            }
+
+            return View();
+        }
+
         public IActionResult Logout()
         {
             return View();
