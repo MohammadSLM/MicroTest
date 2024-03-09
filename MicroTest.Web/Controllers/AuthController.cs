@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MicroTest.Web.Models;
 using MicroTest.Web.Service.IService;
 using MicroTest.Web.Utility;
+using Newtonsoft.Json;
 
 namespace MicroTest.Web.Controllers
 {
@@ -20,6 +21,25 @@ namespace MicroTest.Web.Controllers
         {
             LoginRequestDto loginRequestDto = new();
             return View(loginRequestDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginRequestDto model)
+        {
+            ResponseDto responseDto = await _authService.LoginAsync(model);
+
+            if (responseDto != null && responseDto.IsSuccess)
+            {
+                LoginResponseDto loginResponseDto = 
+                    JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(responseDto.Result));
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("CustomError", responseDto.Message);
+                return View(model);
+            }
         }
 
         [HttpGet]
