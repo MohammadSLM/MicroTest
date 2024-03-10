@@ -30,7 +30,7 @@ namespace MicroTest.Web.Service
                 ApiType = SD.ApiType.Post,
                 Data = loginRequestDto,
                 Url = SD.AuthAPIBase + "/api/auth/login"
-            });
+            }, withBearer: false);
         }
 
         public async Task<ResponseDto?> RegisterAsync(RegisterRequestDto registerRequestDto)
@@ -40,7 +40,7 @@ namespace MicroTest.Web.Service
                 ApiType = SD.ApiType.Post,
                 Data = registerRequestDto,
                 Url = SD.AuthAPIBase + "/api/auth/register"
-            });
+            }, withBearer: false);
         }
     }
 }

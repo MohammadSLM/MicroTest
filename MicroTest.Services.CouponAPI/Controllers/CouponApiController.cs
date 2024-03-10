@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MicroTest.Services.CouponAPI.Data;
@@ -9,6 +10,7 @@ namespace MicroTest.Services.CouponAPI.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
+    [Authorize]
     public class CouponApiController : ControllerBase
     {
         private readonly AppDbContext _db;

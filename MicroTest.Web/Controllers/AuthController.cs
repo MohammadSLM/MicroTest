@@ -45,7 +45,7 @@ namespace MicroTest.Web.Controllers
             }
             else
             {
-                ModelState.AddModelError("CustomError", responseDto.Message);
+                TempData["error"] = responseDto.Message;
                 return View(model);
             }
         }
@@ -82,7 +82,10 @@ namespace MicroTest.Web.Controllers
                     TempData["success"] = "Registration Successful";
                     return RedirectToAction(nameof(Login));
                 }
-
+            }
+            else
+            {
+                TempData["error"] = result.Message;
             }
 
             return View();
