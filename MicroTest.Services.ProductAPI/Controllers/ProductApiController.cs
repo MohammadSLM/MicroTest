@@ -1,23 +1,21 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MicroTest.Services.CouponAPI.Data;
-using MicroTest.Services.CouponAPI.Models;
-using MicroTest.Services.CouponAPI.Models.Dto;
+using MicroTest.Services.ProductAPI.Data;
+using MicroTest.Services.ProductAPI.Models;
+using MicroTest.Services.ProductAPI.Models.Dto;
 
-namespace MicroTest.Services.CouponAPI.Controllers
+namespace MicroTest.Services.ProductAPI.Controllers
 {
-    [Route("api/coupon")]
+    [Route("api/product")]
     [ApiController]
-    [Authorize]
-    public class CouponApiController : ControllerBase
+    public class ProductApiController : ControllerBase
     {
         private readonly AppDbContext _db;
         private ResponseDto _response;
         private IMapper _mapper;
 
-        public CouponApiController(AppDbContext db, IMapper mapper)
+        public ProductApiController(AppDbContext db, IMapper mapper)
         {
             _db = db;
             _response = new ResponseDto();
@@ -29,8 +27,8 @@ namespace MicroTest.Services.CouponAPI.Controllers
         {
             try
             {
-                IEnumerable<Coupon> objList = _db.Coupons.ToList();
-                _response.Result = _mapper.Map<IEnumerable<CouponDto>>(objList);
+                IEnumerable<Product> objList = _db.Products.ToList();
+                _response.Result = _mapper.Map<IEnumerable<ProductDto>>(objList);
                 return _response;
             }
             catch (Exception ex)
@@ -48,31 +46,8 @@ namespace MicroTest.Services.CouponAPI.Controllers
         {
             try
             {
-                Coupon obj = _db.Coupons.First(a => a.CouponId.Equals(id));
-                _response.Result = _mapper.Map<CouponDto>(obj);
-                return _response;
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Message = ex.Message;
-            }
-
-            return _response;
-        }
-
-        [HttpGet]
-        [Route("GetByCode/{code}")]
-        public ResponseDto GetByCode(string code)
-        {
-            try
-            {
-                Coupon obj = _db.Coupons.FirstOrDefault(a => a.CouponCode.ToLower().Equals(code.ToLower()));
-                if (obj is null)
-                {
-                    _response.IsSuccess = false;
-                }
-                _response.Result = _mapper.Map<CouponDto>(obj);
+                Product obj = _db.Products.First(a => a.ProductId.Equals(id));
+                _response.Result = _mapper.Map<ProductDto>(obj);
                 return _response;
             }
             catch (Exception ex)
@@ -86,19 +61,19 @@ namespace MicroTest.Services.CouponAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Post([FromBody] CouponDto couponDto)
+        public ResponseDto Post([FromBody] ProductDto couponDto)
         {
             try
             {
-                Coupon obj = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Add(obj);
+                Product obj = _mapper.Map<Product>(couponDto);
+                _db.Products.Add(obj);
                 _db.SaveChanges();
 
                 if (obj is null)
                 {
                     _response.IsSuccess = false;
                 }
-                _response.Result = _mapper.Map<CouponDto>(obj);
+                _response.Result = _mapper.Map<ProductDto>(obj);
                 return _response;
             }
             catch (Exception ex)
@@ -112,19 +87,19 @@ namespace MicroTest.Services.CouponAPI.Controllers
 
         [HttpPut]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Put([FromBody] CouponDto couponDto)
+        public ResponseDto Put([FromBody] ProductDto couponDto)
         {
             try
             {
-                Coupon obj = _mapper.Map<Coupon>(couponDto);
-                _db.Coupons.Update(obj);
+                Product obj = _mapper.Map<Product>(couponDto);
+                _db.Products.Update(obj);
                 _db.SaveChanges();
 
                 if (obj is null)
                 {
                     _response.IsSuccess = false;
                 }
-                _response.Result = _mapper.Map<CouponDto>(obj);
+                _response.Result = _mapper.Map<ProductDto>(obj);
                 return _response;
             }
             catch (Exception ex)
@@ -143,8 +118,8 @@ namespace MicroTest.Services.CouponAPI.Controllers
         {
             try
             {
-                Coupon obj = _db.Coupons.First(a => a.CouponId.Equals(id));
-                _db.Coupons.Remove(obj);
+                Product obj = _db.Products.First(a => a.ProductId.Equals(id));
+                _db.Products.Remove(obj);
                 _db.SaveChanges();
             }
             catch (Exception ex)

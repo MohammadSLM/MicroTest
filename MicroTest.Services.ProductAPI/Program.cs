@@ -1,12 +1,10 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MicroTest.Services.CouponAPI;
-using MicroTest.Services.CouponAPI.Data;
-using MicroTest.Services.CouponAPI.Extensions;
-using System.Text;
+using MicroTest.Services.ProductAPI;
+using MicroTest.Services.ProductAPI.Data;
+using MicroTest.Services.ProductAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
