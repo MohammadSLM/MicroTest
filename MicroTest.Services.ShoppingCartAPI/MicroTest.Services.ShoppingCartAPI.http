@@ -1,0 +1,6 @@
+@MicroTest.Services.ShoppingCartAPI_HostAddress = http://localhost:5177
+
+GET {{MicroTest.Services.ShoppingCartAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
