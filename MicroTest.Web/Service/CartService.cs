@@ -28,7 +28,7 @@ namespace MicroTest.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ShoppingCartAPIBase + "/api/cart/GetCart" + userId
+                Url = SD.ShoppingCartAPIBase + "/api/cart/GetCart/" + userId
             });
         }
 
